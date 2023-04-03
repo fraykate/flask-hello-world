@@ -69,7 +69,7 @@ def db_select():
         response += "<tr>"
         for info in player:
             response += "<td>{}</td>".format(info)
-        response += "/tr"
+        response += "</tr>"
     response += "</table>"
     return response
 
