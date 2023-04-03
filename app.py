@@ -60,7 +60,7 @@ def db_select():
     c.execute('''
         SELECT * FROM Basketball;
         ''')
-    records = cur.fetchall()
+    records = c.fetchall()
     conn.close()
     # HTML formatting for results
     response = ""
