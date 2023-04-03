@@ -76,3 +76,11 @@ def db_select():
 # Drop the Basketball table from the database
 @app.route('/db_drop')
 def db_drop():
+    conn = psycopg2.connect("postgres://kfray_renderapp_db_user:xm98rBz6dnCzMowhUlPPe97XI6KPJxlp@dpg-cglfedseoogkndgcqiag-a.oregon-postgres.render.com/kfray_renderapp_db") 
+    c = conn.cursor()
+    c.execute('''
+        DROP TABLE Basketball;
+        ''')
+    conn.commit()
+    conn.close()
+    return "Successfully dropped Basketball table"
