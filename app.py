@@ -1,3 +1,12 @@
+#####
+#####
+# Author: Kate Fray
+# Updated: 4/17/2023 with commentary
+# Description: This file is an application that uses route methods to create, test, populate, teardown and display data from a postgres database
+# Use Case: This can be used as a base file for building applications that need to interact with databases.
+#####
+#####
+
 import psycopg2
 
 from flask import Flask
@@ -7,14 +16,21 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, World!'
 
-# Test the database connection
+# Test the database connection:
+# This route connects to the intended database
+# closes the db connection
+# and returns a 'success' message
 @app.route('/db_test')
 def db_test():
     conn = psycopg2.connect("postgres://kfray_renderapp_db_user:xm98rBz6dnCzMowhUlPPe97XI6KPJxlp@dpg-cglfedseoogkndgcqiag-a.oregon-postgres.render.com/kfray_renderapp_db")
     conn.close()
     return "Successful connection to kfray_renderapp_db database"
 
-# Create a table in the database
+# Create a table in the database:
+# This route connects to the database
+# exeutes a 'CREATE TABLE' command to create the Basketball table with specified metadata
+# commits the change, closes the db connection
+# and returns a 'success' message.
 @app.route('/db_create')
 def db_create():
     conn = psycopg2.connect("postgres://kfray_renderapp_db_user:xm98rBz6dnCzMowhUlPPe97XI6KPJxlp@dpg-cglfedseoogkndgcqiag-a.oregon-postgres.render.com/kfray_renderapp_db") 
