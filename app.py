@@ -1,9 +1,16 @@
 #####
 #####
+# 
 # Author: Kate Fray
 # Updated: 4/17/2023 with commentary
 # Description: This file is an application that uses route methods to create, test, populate, teardown and display data from a postgres database
 # Use Case: This can be used as a base file for building applications that need to interact with databases.
+#
+# Note about the routes: 
+### Each route will connect to and close the connection to the database
+### All routes other than the query route will return a success message upon completion
+### All routes other than the index, test and query routes will also commit their changes
+#
 #####
 #####
 
@@ -17,9 +24,6 @@ def hello_world():
     return 'Hello, World!'
 
 # Test the database connection:
-# This route connects to the intended database
-# closes the db connection
-# and returns a 'success' message
 @app.route('/db_test')
 def db_test():
     conn = psycopg2.connect("postgres://kfray_renderapp_db_user:xm98rBz6dnCzMowhUlPPe97XI6KPJxlp@dpg-cglfedseoogkndgcqiag-a.oregon-postgres.render.com/kfray_renderapp_db")
@@ -27,10 +31,7 @@ def db_test():
     return "Successful connection to kfray_renderapp_db database"
 
 # Create a table in the database:
-# This route connects to the database
-# exeutes a 'CREATE TABLE' command to create the Basketball table with specified metadata
-# commits the change, closes the db connection
-# and returns a 'success' message.
+# executes a 'CREATE TABLE' command to create the Basketball table with specified metadata
 @app.route('/db_create')
 def db_create():
     conn = psycopg2.connect("postgres://kfray_renderapp_db_user:xm98rBz6dnCzMowhUlPPe97XI6KPJxlp@dpg-cglfedseoogkndgcqiag-a.oregon-postgres.render.com/kfray_renderapp_db") 
@@ -49,7 +50,8 @@ def db_create():
     conn.close()
     return "Successfully created Basketball table"
 
-# Insert values into the table
+# Insert values into the table:
+# executes an 'INSERT' command to fill the Basketball table with specified data
 @app.route('/db_insert')
 def db_insert():
     conn = psycopg2.connect("postgres://kfray_renderapp_db_user:xm98rBz6dnCzMowhUlPPe97XI6KPJxlp@dpg-cglfedseoogkndgcqiag-a.oregon-postgres.render.com/kfray_renderapp_db") 
@@ -67,7 +69,10 @@ def db_insert():
     conn.close()
     return "Successfully populated Basketball table"
 
-# Query all of the data in the database and return data in a table format
+# Query all of the data in the database and return data in a table format:
+# executes a query 
+# fetches the results of that query
+# creates and returns an HTML response from the results
 @app.route('/db_select')
 def db_select():
     conn = psycopg2.connect("postgres://kfray_renderapp_db_user:xm98rBz6dnCzMowhUlPPe97XI6KPJxlp@dpg-cglfedseoogkndgcqiag-a.oregon-postgres.render.com/kfray_renderapp_db") 
@@ -89,7 +94,8 @@ def db_select():
     response += "</table>"
     return response
 
-# Drop the Basketball table from the database
+# Drop the Basketball table from the database:
+# executes a 'DROP TABLE' command to remove the Basketball table
 @app.route('/db_drop')
 def db_drop():
     conn = psycopg2.connect("postgres://kfray_renderapp_db_user:xm98rBz6dnCzMowhUlPPe97XI6KPJxlp@dpg-cglfedseoogkndgcqiag-a.oregon-postgres.render.com/kfray_renderapp_db") 
